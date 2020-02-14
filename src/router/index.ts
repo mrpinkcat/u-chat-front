@@ -1,20 +1,35 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import ChatView from '../views/ChatView.vue';
+import HomeView from '@/views/HomeView.vue';
 import requireAuth from '@/scripts/RequireAuth';
 import LoginView from '@/views/LoginView.vue';
+
+import Conv from '@/components/Conv.vue';
+import NoConvSelected from '@/components/NoConvSelected.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'chat',
-    component: ChatView,
+    component: HomeView,
     /*
       Check function for redirect the user if they are not logged
     */
     beforeEnter: requireAuth,
+
+    children: [
+      {
+        path: ':id',
+        component: Conv,
+        name: 'chat.conv',
+      },
+      {
+        path: '',
+        component: NoConvSelected,
+        name: 'chat.no-conv',
+      },
+    ],
   },
   {
     path: '/login',
