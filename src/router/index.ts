@@ -3,13 +3,31 @@ import VueRouter from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import requireAuth from '@/scripts/RequireAuth';
 import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
 
 import Conv from '@/components/Conv.vue';
 import NoConvSelected from '@/components/NoConvSelected.vue';
+import AddFriend from '@/views/addFriend.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView,
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView,
+  },
+  {
+    path: '/add-friend',
+    component: AddFriend,
+    name: 'add-friend',
+    beforeEnter: requireAuth,
+  },
   {
     path: '/',
     component: HomeView,
@@ -30,11 +48,6 @@ const routes = [
         name: 'chat.no-conv',
       },
     ],
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: LoginView,
   },
 ];
 

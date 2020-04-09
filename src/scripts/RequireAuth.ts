@@ -1,11 +1,11 @@
 import store from '../store';
 
 export default (to: any, from: any, next: any) => {
-  console.log('to', to, 'from', from);
+  // console.log('to', to, 'from', from);
   if (store.getters.getUserLoggedStatus) {
     next();
   } else {
-    console.log('nop');
+    console.warn('Auth require');
     next('/login');
   }
 };

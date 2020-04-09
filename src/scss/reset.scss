@@ -2,3 +2,36 @@ body, html {
   margin: 0;
   padding: 0;
 }
+
+button {
+  background: #242545;
+  padding: 10px;
+  color: #B8BBD5;
+  border-radius: 0;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+
+  &:hover, &:focus {
+    background: #2D2D56;
+    text-decoration: underline;
+  }
+
+  &.no {
+    &:hover, &:focus {
+      background: #242545;
+      text-decoration: none;
+      cursor: not-allowed;
+    }
+  }
+}
+
+input {
+  background: #3D3D74;
+  font-size: 16px;
+  padding: 10px;
+  border: 0;
+  color: #B8BBD5;
+  outline: none;
+}
