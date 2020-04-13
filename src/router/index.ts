@@ -8,6 +8,7 @@ import RegisterView from '@/views/RegisterView.vue';
 import Conv from '@/components/Conv.vue';
 import NoConvSelected from '@/components/NoConvSelected.vue';
 import AddFriend from '@/views/addFriend.vue';
+import createConv from '@/views/createConv.vue';
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,12 @@ const routes = [
     path: '/add-friend',
     component: AddFriend,
     name: 'add-friend',
+    beforeEnter: requireAuth,
+  },
+  {
+    path: '/create-conv',
+    component: createConv,
+    name: 'create-conv',
     beforeEnter: requireAuth,
   },
   {

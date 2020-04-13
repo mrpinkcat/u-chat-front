@@ -52,22 +52,6 @@ const login = (username: string, password: string): Promise<{token: string, user
     });
 });
 
-// --- CONVS ---
-
-const getConvs = () => new Promise((resolve, reject) => {
-  axios.get(`${domain}/conversation`, {
-    headers: {
-      Authorization: `Bearer ${store.getters.getToken}`,
-    },
-  })
-    .then((res) => {
-      resolve(res.data);
-    })
-    .catch(() => {
-      reject();
-    });
-});
-
 const searchUsers = (query: string) => new Promise((resolve, reject) => {
   axios.get(`${domain}/user/search`, {
     params: {
@@ -101,10 +85,68 @@ const addFriend = (friendUsername: string): Promise<{username: String, firstName
     });
 });
 
+const getConvs = (): Promise<{ _id: String, name: String, topic: String, members: { username: String, firstName: String, lastName: String }[], messages: {}[] }[]> => new Promise((resolve, reject) => {
+  axios.get(`${domain}/conversation`, {
+    headers: {
+      Authorization: `Bearer ${store.getters.getToken}`,
+    },
+  })
+    .then((res) => {
+      resolve(res.data);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
+const getFriends = (): Promise<{ username: String, firstName: String, lastName: String }[]> => new Promise((resolve, reject) => {
+  axios.get(`${domain}/user/friends`)
+    .then((res) => {
+      resolve(res.data);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
+const createConversation = (name: String, topic: String, members: { username: String, firstName: String, lastName: String }[]): Promise<{ _id: String }> => new Promise((resolve, reject) => {
+  axios.post(`${domain}/conversation`, {
+    name,
+    topic,
+    members,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${store.getters.getToken}`,
+    },
+  })
+    .then((res) => {
+      resolve(res.data);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
+const getConvInfo = (id: String): Promise<{ name: String, topic: String, members: { username: String, firstName: String, lastName: String }[], messages: { content: String, sender: String, conv: String }[] }> => new Promise((resolve, reject) => {
+  axios.get(`${domain}/conversation/${id}`)
+    .then((res) => {
+      resolve(res.data);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
 export {
   login,
   register,
+
   getConvs,
+  getConvInfo,
+  createConversation,
+
   searchUsers,
   addFriend,
+  getFriends,
 };

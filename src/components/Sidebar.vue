@@ -23,42 +23,28 @@
         <div class="dot"></div>
         <div class="dot"></div>
       </button> -->
-      <!-- <div class="user-dropdown" v-if="userDropdown">
-        <router-link :to="{ name: 'settings' }" tag="button">
-          <img src="./../assets/settings.svg">
-          <span>Settings</span>
-        </router-link>
-        <router-link :to="{ name: 'add-friend' }" tag="button">
-          <img src="./../assets/add-friend.png">
-          <span>Add friend</span>
-        </router-link>
-        <button @click="disconnect">
-          <img src="./../assets/disconnect.png">
-          <span>Disconnect</span>
-        </button>
-      </div> -->
     </div>
 
     <div v-if="convs && convs.length > 0" class="convs">
-      <div class="user" v-for="conv in convs" :key="conv.id">
-        <img :src="user.imageUrl" class="user-image">
+      <router-link class="conv" v-for="conv in convs" :key="conv.id" :to="`/${conv._id}`">
+        <!-- <img :src="conv.imageUrl" class="user-image"> -->
         <div class="text">
           <div class="top">
-            <span class="user-name">{{user.name}}</span>
+            <span class="user-name">{{conv.name}}</span>
             <!-- <span class="last-message-hour">· 5h</span> -->
           </div>
           <!-- <span class="last-message">Lorem ipsum dolor sit amet consectetur</span> -->
         </div>
-        <div class="unread-badge" v-if="user.unreadMessages">
+        <!-- <div class="unread-badge" v-if="user.unreadMessages">
           <span class="unread-number">1</span>
-        </div>
-      </div>
+        </div> -->
+      </router-link>
     </div>
     <div v-else class="no-convs">
       <img src="@/assets/sad.svg" alt="*sad face*">
       <span>You don't have conversation yet.</span>
       <span class="hint">No worries, you can create a new conversation with your friends by clicking on the button below.</span>
-      <button @click="newConv">New conversation</button>
+      <router-link :to="{ name: 'create-conv' }" tag="button">New conversation</router-link>
     </div>
   </div>
 </template>
@@ -67,7 +53,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import axios from 'axios';
-import ContextualMenu from '@/components/ContextualMenu.vue';
 import router from '../router';
 import { getConvs } from '../scripts/serverManager';
 
@@ -80,7 +65,7 @@ import { getConvs } from '../scripts/serverManager';
   },
 })
 export default class Sidebar extends Vue {
-  convs?: any;
+  convs: any[] = [];
 
   loading = true;
 
@@ -185,52 +170,28 @@ export default class Sidebar extends Vue {
         }
       }
     }
-
-    .user-dropdown {
-      background: mix(#33355F, #2D2D56, 50%);
-      border: solid 1px rgb(94, 97, 131);
-      width: fit-content;
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      left: 260px;
-      top: 60px;
-
-      button {
-        display: flex;
-        align-items: center;
-        background: mix(#33355F, #2D2D56, 50%);
-        border: none;
-        color: #B9BBD5;
-        font-size: 16px;
-        width: 100%;
-        padding: 10px;
-        text-align: start;
-        cursor: pointer;
-
-        img {
-          width: 20px;
-          margin-right: 10px;
-        }
-
-        &:hover {
-          background: scale-color($color: mix(#33355F, #2D2D56, 50%), $lightness: 8%);
-        }
-      }
-    }
   }
 
   .convs {
-    .user {
+    .conv {
       padding: 15px 15px;
       width: calc(100% - 30px);
       display: flex;
       flex-direction: row;
       cursor: pointer;
+      text-decoration: none;
 
-      &:hover {
+      &:visited {
+        color: #B8BBD5;
+      }
+
+      &:hover, &.router-link-exact-active {
         background: #3E3E67;
         transition: background ease .25s;
+      }
+
+      &:hover {
+        text-decoration: underline;
       }
 
       .user-image {

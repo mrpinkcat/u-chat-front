@@ -17,6 +17,7 @@ module.exports = {
     'no-else-return': 'off',
     'import/no-cycle': 'off',
     'class-methods-use-this': 'off',
+    'no-underscore-dangle': [2, { allow: ['_id'] }],
   },
   parserOptions: {
     parser: '@typescript-eslint/parser',
