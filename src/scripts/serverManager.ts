@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '../store/index';
 
-const domain = 'http://localhost:3000';
+const domain = 'http://192.168.0.120:3000';
 
 // @ts-ignore
 const register = (username: string, firstName: string, lastName: string, password: string): Promise<string> => new Promise((resolve, reject) => {
@@ -128,7 +128,7 @@ const createConversation = (name: String, topic: String, members: { username: St
     });
 });
 
-const getConvInfo = (id: String): Promise<{ name: String, topic: String, members: { username: String, firstName: String, lastName: String }[], messages: { content: String, sender: String, conv: String }[] }> => new Promise((resolve, reject) => {
+const getConvInfo = (id: String): Promise<{ name: String, topic: String, members: { username: String, firstName: String, lastName: String }[], messages: { content: String, sender: { username: String }, conv: String }[] }> => new Promise((resolve, reject) => {
   axios.get(`${domain}/conversation/${id}`)
     .then((res) => {
       resolve(res.data);

@@ -39,6 +39,7 @@
           <span class="unread-number">1</span>
         </div> -->
       </router-link>
+      <router-link :to="{ name: 'create-conv' }" tag="button">New conversation</router-link>
     </div>
     <div v-else class="no-convs">
       <img src="@/assets/sad.svg" alt="*sad face*">
@@ -83,18 +84,6 @@ export default class Sidebar extends Vue {
     this.$store.commit('DISCONNECT');
     router.push({ name: 'login' });
   }
-
-  newConv() {
-    console.log(this.$store.getters.getToken);
-    axios.post('http://localhost:3000/conversation/', {
-      name: 'test',
-      members: ['id1', 'id2'],
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.$store.getters.getToken}`,
-      },
-    });
-  }
 }
 </script>
 
@@ -128,6 +117,7 @@ export default class Sidebar extends Vue {
       .user-name {
         margin-left: 20px;
         font-weight: 500;
+        color: #B8BBD5;
       }
     }
 
@@ -210,6 +200,7 @@ export default class Sidebar extends Vue {
         .top {
           .user-name {
             margin-right: 5px;
+            color: #B8BBD5;
           }
 
           .last-message-hour {
